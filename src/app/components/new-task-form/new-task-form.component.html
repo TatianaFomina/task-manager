@@ -1,0 +1,19 @@
+
+<form>
+  <textarea
+    #input
+    name="card-title"
+    [formControl]="formControl"
+    class="card task-title-input"
+    autofocus 
+    placeholder="Enter card title..."
+    required>
+  </textarea>
+
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">
+    Add card
+  </button>
+  <button class="btn" (click)="onDiscard()">
+    <i class="fa fa-times"></i>
+  </button>
+</form>

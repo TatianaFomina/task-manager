@@ -12,11 +12,18 @@
     <ng-container *ngFor="let task of data.tasks">
       <app-task [data]="task"></app-task>
     </ng-container>
-    <button class="btn btn-light add-btn">
+
+    <button *ngIf="!newTaskFormDisplayed" class="btn btn-light add-btn" (click)="newTaskFormDisplayed = true">
       <i class="fa fa-plus add-icon"></i>
       <span>
         Add new card
       </span>
     </button>
+
+    <app-new-task-form
+      *ngIf="newTaskFormDisplayed"
+      (close)="newTaskFormDisplayed = false"
+      (submit)="addNewCard($event)">
+    </app-new-task-form>
   </div>
 </div>

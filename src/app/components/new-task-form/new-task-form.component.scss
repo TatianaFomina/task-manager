@@ -1,0 +1,11 @@
+:host {
+  display: block;
+
+  .task-title-input {
+    padding: 0.5rem;
+    width: 100%;
+    resize: none;
+    outline: none;
+    margin-bottom: 0.5rem;
+  }
+}
