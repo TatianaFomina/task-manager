@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { List } from 'src/app/models/list.model';
+import { Task } from 'src/app/models/task.model';
 import { TaskComponent } from '../task/task.component';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-list',
@@ -10,6 +12,7 @@ import { TaskComponent } from '../task/task.component';
 export class ListComponent implements OnInit {
 
   @Input() data: List;
+  @Output() cardDrop = new EventEmitter<CdkDragDrop<Task[]>>();
 
   public newTaskFormDisplayed: boolean = false;
 
@@ -22,6 +25,10 @@ export class ListComponent implements OnInit {
     // console.log(cardTitle)
     this.data.tasks.push({title: cardTitle, id: ''})
     // this.newTaskFormDisplayed = true;
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
+    this.cardDrop.emit(event);
   }
 
 }

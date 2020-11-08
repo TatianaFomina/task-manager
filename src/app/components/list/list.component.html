@@ -9,9 +9,9 @@
       </button>
     </div>
    
-    <ng-container *ngFor="let task of data.tasks">
-      <app-task [data]="task"></app-task>
-    </ng-container>
+    <div cdkDropList [cdkDropListData]="data.tasks" (cdkDropListDropped)="drop($event)" class="drop-list-container">
+      <app-task *ngFor="let task of data.tasks" [data]="task" cdkDrag></app-task>
+    </div>
 
     <button *ngIf="!newTaskFormDisplayed" class="btn btn-light add-btn" (click)="newTaskFormDisplayed = true">
       <i class="fa fa-plus add-icon"></i>

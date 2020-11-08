@@ -1,3 +1,8 @@
-<ng-container *ngFor="let list of lists">
-  <app-list [data]="list"></app-list>
-</ng-container>
+<div cdkDropListGroup>
+  <ng-container *ngFor="let list of lists">
+    <!-- <app-list [data]="list" cdkDropList [cdkDropListData]="list.tasks" (cdkDropListDropped)="drop($event)"> -->
+    <app-list [data]="list" (cardDrop)="drop($event)">
+
+    </app-list>
+  </ng-container>
+</div>
