@@ -1,0 +1,25 @@
+.app-list {
+  width: 18rem;
+
+  .card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+  }
+
+  .list-options-btn {
+    border-radius: 50%;
+  }
+
+  app-task {
+    margin-bottom: 0.5rem;
+  }
+
+  .add-btn {
+    width: 100%;
+    
+    .add-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}

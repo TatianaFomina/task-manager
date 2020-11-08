@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { List } from './models/list.model';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tasks';
+  lists: List[] = [{
+    id: "id",
+    name: "To Do",
+    tasks: [
+      {
+        id: "id",
+        title: "Buy Bread"
+      },
+      {
+        id: "id",
+        title: "Buy Eggs"
+      }
+    ]
+  }];
 }

@@ -1,0 +1,22 @@
+<div class="card app-list">
+  <div class="card-body">
+    <div class="card-title">
+      <h5>
+        {{ data.name }}
+      </h5>
+      <button class="btn btn-light list-options-btn">
+        <i class="fa fa-ellipsis-h"></i>
+      </button>
+    </div>
+   
+    <ng-container *ngFor="let task of data.tasks">
+      <app-task [data]="task"></app-task>
+    </ng-container>
+    <button class="btn btn-light add-btn">
+      <i class="fa fa-plus add-icon"></i>
+      <span>
+        Add new card
+      </span>
+    </button>
+  </div>
+</div>
