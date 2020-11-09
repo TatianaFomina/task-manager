@@ -4,15 +4,23 @@
   .card-title {
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
   }
 
   .drop-list-container {
     min-height: 1rem;
   }
 
+  .dropdown-container {
+    margin-left: 1rem;
+  }
+
   .list-options-btn {
     border-radius: 50%;
+
+    &.dropdown-toggle::after {
+      display: none;
+    }
   }
 
   app-task {

@@ -1,0 +1,20 @@
+<ng-container *ngIf="!editMode">
+  <h5> {{value}} </h5>
+</ng-container>
+
+<ng-container *ngIf="editMode">
+  <input
+    #input
+    autofocus
+    type="text"
+    placeholder="List Title"
+    class="title-input form-control"
+    [formControl]="control"
+    (focusout)="save()"
+    (keyup.enter)="save()"
+    [class.is-invalid]="control.invalid"
+  >
+  <small class="text-danger" *ngIf="control.invalid">
+    Must be at least 1 character long.
+  </small> 
+</ng-container>

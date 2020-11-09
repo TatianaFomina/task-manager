@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './new-task-form.component.html',
   styleUrls: ['./new-task-form.component.scss']
 })
-export class NewTaskFormComponent implements OnInit, OnDestroy {
+export class NewTaskFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Output() close = new EventEmitter();
   @Output() submit = new EventEmitter<string>();
@@ -29,12 +29,17 @@ export class NewTaskFormComponent implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    this.cardTitleInput.nativeElement.focus();
+  }
+
   onSubmit(): void {
     if (this.formControl.invalid) {
       return;
     }
     this.submit.emit(this.formControl.value.trim());
     this.formControl.reset();
+    this.cardTitleInput.nativeElement.focus();
   }
 
   onDiscard(): void {
