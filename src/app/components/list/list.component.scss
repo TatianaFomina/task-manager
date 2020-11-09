@@ -8,7 +8,7 @@
   }
 
   .drop-list-container {
-    min-height: 3rem;
+    min-height: 1rem;
   }
 
   .list-options-btn {
@@ -26,4 +26,11 @@
       margin-right: 0.5rem;
     }
   }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.5;
+  border: 1px dashed gray;
+  border-radius: 0.25rem;
+  color: gray;
 }
