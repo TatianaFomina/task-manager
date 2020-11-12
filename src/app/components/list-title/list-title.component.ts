@@ -26,10 +26,7 @@ export class TitleEditorComponent implements OnInit {
 
   @HostListener('click') onClick() {
     if (this.control.touched && this.control.invalid) { return; }
-    this.control.setValue(this.value);
-    this.editMode = true;
-    this.cd.detectChanges();
-    this.inputElement.nativeElement.focus();
+    this.enableEditting();
   }
 
   save() {
@@ -37,6 +34,13 @@ export class TitleEditorComponent implements OnInit {
     this.value = this.control.value;
     this.valueChange.emit();
     this.editMode = false;
+  }
+
+  enableEditting() {
+    this.control.setValue(this.value);
+    this.editMode = true;
+    this.cd.detectChanges();
+    this.inputElement.nativeElement.focus();
   }
 
 }
