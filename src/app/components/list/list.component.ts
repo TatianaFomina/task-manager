@@ -3,6 +3,8 @@ import { List } from 'src/app/models/list.model';
 import { Task } from 'src/app/models/task.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FormControl, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CardEditorComponent, EditorOptions } from '../card-editor/card-editor.component';
 
 @Component({
   selector: 'app-list',
@@ -18,7 +20,7 @@ export class ListComponent implements OnInit {
   public editTitle: boolean = false;
   public listTitleControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +41,19 @@ export class ListComponent implements OnInit {
 
   drop(event: CdkDragDrop<Task[]>): void {
     this.cardDrop.emit(event);
+  }
+
+  openCardEditor(task: Task) {
+    const options: EditorOptions = {
+      columnName: null,
+      cardData: task
+    };
+    const modalRef = this.modalService.open(CardEditorComponent);
+    modalRef.componentInstance.options = options;
+    modalRef.result.then(
+      result => {},
+      () => {}
+    );
   }
 
 }

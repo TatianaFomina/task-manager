@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TitleEditorComponent } from './list-title.component';
+import { TitleEditorComponent } from './title-editor.component';
 
 describe('TitleEditorComponent', () => {
   let component: TitleEditorComponent;

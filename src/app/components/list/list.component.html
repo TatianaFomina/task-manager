@@ -1,7 +1,7 @@
 <div class="card app-list">
   <div class="card-body">
     <div class="card-title">
-      <app-list-title [value]="data.name" #title></app-list-title>
+      <app-title-editor [value]="data.name" #title></app-title-editor>
       
       <div ngbDropdown class="dropdown-container">
         <button class="btn btn-light list-options-btn" ngbDropdownToggle>
@@ -17,7 +17,7 @@
     </div>
    
     <div cdkDropList [cdkDropListData]="data.tasks" (cdkDropListDropped)="drop($event)" class="drop-list-container">
-      <app-task *ngFor="let task of data.tasks" [data]="task" cdkDrag></app-task>
+      <app-task *ngFor="let task of data.tasks" [data]="task" cdkDrag (click)="openCardEditor(task)"></app-task>
     </div>
 
     <button *ngIf="!newTaskFormDisplayed" class="btn btn-light add-btn" (click)="newTaskFormDisplayed = true">

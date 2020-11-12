@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, I
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-list-title',
-  templateUrl: './list-title.component.html',
-  styleUrls: ['./list-title.component.scss']
+  selector: 'app-title-editor',
+  templateUrl: './title-editor.component.html',
+  styleUrls: ['./title-editor.component.scss']
 })
 export class TitleEditorComponent implements OnInit {
 
