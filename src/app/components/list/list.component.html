@@ -1,14 +1,14 @@
 <div class="card app-list">
   <div class="card-body">
     <div class="card-title">
-      <app-title-editor [value]="data.name" #title></app-title-editor>
+      <app-title-editor [formControl]="columnTitleControl" #title></app-title-editor>
       
       <div ngbDropdown class="dropdown-container">
         <button class="btn btn-light list-options-btn" ngbDropdownToggle>
           <i class="fa fa-ellipsis-h"></i>
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem (click)="title.enableEditting()">Edit title</button>
+          <button ngbDropdownItem (click)="title.enableEditing()">Edit title</button>
           <div class="dropdown-divider"></div>
           <button ngbDropdownItem class="text-danger">Delete</button>
         </div>

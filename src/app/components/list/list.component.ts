@@ -18,25 +18,16 @@ export class ListComponent implements OnInit {
 
   public newTaskFormDisplayed: boolean = false;
   public editTitle: boolean = false;
-  public listTitleControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
+  public columnTitleControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
 
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.columnTitleControl.setValue(this.data.name);
   }
 
   addNewCard(cardTitle: string): void {
     this.data.tasks.push({title: cardTitle, id: ''});
-  }
-
-  showTitleEditor(): void {
-    this.listTitleControl.setValue(this.data.name);
-    this.editTitle = true;
-  }
-
-  titleInputFocusout() {
-    this.data.name = this.listTitleControl.value;
-    this.editTitle = false;
   }
 
   drop(event: CdkDragDrop<Task[]>): void {
