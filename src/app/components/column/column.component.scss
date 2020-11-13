@@ -1,5 +1,10 @@
+:host {
+  display: block;
+}
+
 .app-list {
   width: 18rem;
+  background: #fbfbfb;
 
   .card-title {
     display: flex;

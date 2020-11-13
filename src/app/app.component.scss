@@ -1,12 +1,14 @@
 :host > div {
   display: flex;
+  padding: 0 0.5rem;
 }
 
 .new-column-form {
   height: fit-content;
   min-width: 18rem;
+  background: #fbfbfb;
 }
 
 .single-column {
-  margin: 1rem;
+  margin: 1rem 0.5rem;
 }
