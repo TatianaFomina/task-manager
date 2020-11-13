@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { List } from './models/list.model';
 import { Task } from './models/task.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { v4 as uuidv4 } from 'uuid';
 
 
 @Component({
@@ -12,25 +13,25 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class AppComponent {
   title = 'tasks';
   lists: List[] = [{
-    id: "id",
+    id: uuidv4(),
     name: "To Do",
     tasks: [
       {
-        id: "id",
+        id: uuidv4(),
         title: "Buy Bread"
       },
       {
-        id: "id",
+        id: uuidv4(),
         title: "Buy Eggs"
       }
     ]
   },
   {
-    id: "id",
+    id: uuidv4(),
     name: "Done",
     tasks: [
       {
-        id: "id",
+        id: uuidv4(),
         title: "Buy Onion"
       }
     ]
@@ -45,5 +46,10 @@ export class AppComponent {
                         event.previousIndex,
                         event.currentIndex);
     }
+  }
+
+  deleteColumn(columnId: string) {
+    const columnIndexToDelete = this.lists.findIndex(column => column.id === columnId);
+    this.lists.splice(columnIndexToDelete, 1);
   }
 }

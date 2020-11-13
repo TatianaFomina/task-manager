@@ -1,7 +1,7 @@
 <div cdkDropListGroup>
   <ng-container *ngFor="let list of lists">
     <!-- <app-list [data]="list" cdkDropList [cdkDropListData]="list.tasks" (cdkDropListDropped)="drop($event)"> -->
-    <app-list [data]="list" (cardDrop)="drop($event)">
+    <app-list [data]="list" (cardDrop)="drop($event)" (delete)="deleteColumn($event)">
 
     </app-list>
   </ng-container>

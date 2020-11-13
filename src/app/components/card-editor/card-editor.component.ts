@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Task } from 'src/app/models/task.model';
 
 export interface EditorOptions {
   columnName: string;
   cardData: Task;
+}
+
+export enum ModalActions {
+  UPDATE, DELETE
 }
 
 @Component({
@@ -15,13 +19,16 @@ export interface EditorOptions {
 })
 export class CardEditorComponent implements OnInit {
 
-  options: EditorOptions;
-  cardTitleControl = new FormControl(null); 
+  @Input() options: EditorOptions;
+  form: FormGroup;
 
-  constructor(private modal: NgbActiveModal) { }
+  constructor(private modal: NgbActiveModal, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.cardTitleControl.setValue(this.options.cardData.title);
+    this.form = this.fb.group({
+      title: [this.options.cardData.title],
+      description: []
+    });
   }
 
   dismiss() {
@@ -29,7 +36,17 @@ export class CardEditorComponent implements OnInit {
   }
 
   submit() {
-    this.modal.close();
+    this.modal.close({
+      action: ModalActions.UPDATE,
+      data:{
+        ...this.options.cardData,
+        ...this.form.value
+      }
+    });
+  }
+
+  delete() {
+    this.modal.close({ action: ModalActions.DELETE, data: { id: this.options.cardData.id }});
   }
 
 }
