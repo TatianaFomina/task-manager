@@ -26,7 +26,7 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = this.formControl.valueChanges.subscribe(value => {
-      this.formControl.setValue(value?.replace(/^\s+|\s+$/g, ''), { emitEvent: false });
+      this.formControl.setValue(value?.replace(/^\n|\n$/g, ''), { emitEvent: false });
     });
   }
 
