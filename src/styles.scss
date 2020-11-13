@@ -3,7 +3,7 @@
 $theme-colors: (
   "primary": #8c7db6,
   "danger": #fb565b,
-  "light": #F4F4F4
+  "light": #F2F2F2
 );
 
 /* Importing Bootstrap SCSS file. */
@@ -14,4 +14,8 @@ $theme-colors: (
 .modal-backdrop {
   width: 100%;
   height: 100%;
+}
+
+body {
+  background: #d9d5e4;
 }
