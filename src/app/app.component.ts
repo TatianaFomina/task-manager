@@ -52,4 +52,8 @@ export class AppComponent {
     const columnIndexToDelete = this.columns.findIndex(column => column.id === columnId);
     this.columns.splice(columnIndexToDelete, 1);
   }
+
+  addColumn(title: string) {
+    this.columns.push({id: uuidv4(), name: title, cards: []});
+  }
 }

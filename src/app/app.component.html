@@ -3,5 +3,9 @@
     <app-column [data]="column" (cardDrop)="drop($event)" (delete)="deleteColumn($event)">
     </app-column>
   </ng-container>
-  <app-new-item-form itemType="column"></app-new-item-form>
+  <div class="card new-column-form">
+    <div class="card-body">
+      <app-new-item-form itemType="column" (submit)="addColumn($event)"></app-new-item-form>
+    </div>
+  </div>
 </div>
