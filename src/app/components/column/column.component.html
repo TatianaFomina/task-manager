@@ -20,17 +20,9 @@
       <app-card *ngFor="let card of data.cards" [data]="card" cdkDrag (click)="openCardEditor(card)"></app-card>
     </div>
 
-    <button *ngIf="!newCardFormDisplayed" class="btn btn-light add-btn" (click)="newCardFormDisplayed = true">
-      <i class="fa fa-plus add-icon"></i>
-      <span>
-        Add new card
-      </span>
-    </button>
-
-    <app-new-task-form
-      *ngIf="newCardFormDisplayed"
-      (close)="newCardFormDisplayed = false"
+    <app-new-item-form
+      itemType="card"
       (submit)="addNewCard($event)">
-    </app-new-task-form>
+    </app-new-item-form>
   </div>
 </div>

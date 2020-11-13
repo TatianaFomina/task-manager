@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { NgbDropdownModule, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColumnComponent } from './components/column/column.component';
 import { CardComponent } from './components/card/card.component';
-import { NewTaskFormComponent } from './components/new-task-form/new-task-form.component';
+import { NewItemFormComponent } from './components/new-item-form/new-item-form.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -17,7 +17,7 @@ import { CardEditorComponent } from './components/card-editor/card-editor.compon
     AppComponent,
     ColumnComponent,
     CardComponent,
-    NewTaskFormComponent,
+    NewItemFormComponent,
     TitleEditorComponent,
     CardEditorComponent
   ],

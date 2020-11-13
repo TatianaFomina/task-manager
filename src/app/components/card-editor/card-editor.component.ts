@@ -26,9 +26,10 @@ export class CardEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      title: [this.options.cardData.title],
+      title: [],
       description: []
     });
+    this.form.patchValue(this.options.cardData);
   }
 
   dismiss() {

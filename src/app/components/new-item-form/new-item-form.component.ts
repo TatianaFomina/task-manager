@@ -1,23 +1,28 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-new-task-form',
-  templateUrl: './new-task-form.component.html',
-  styleUrls: ['./new-task-form.component.scss']
+  selector: 'app-new-item-form',
+  templateUrl: './new-item-form.component.html',
+  styleUrls: ['./new-item-form.component.scss']
 })
-export class NewTaskFormComponent implements OnInit, OnDestroy, AfterViewInit {
+export class NewItemFormComponent implements OnInit, OnDestroy {
 
-  @Output() close = new EventEmitter();
   @Output() submit = new EventEmitter<string>();
   @ViewChild('input') cardTitleInput: ElementRef;
+  @Input() editMode: boolean = false;
+  @Input() itemType: string = 'card';
 
   public formControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
 
   private sub: Subscription;
 
-  constructor() { }
+  get placeholder() {
+    return `Enter ${this.itemType} title...`;
+  }
+
+  constructor(private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.sub = this.formControl.valueChanges.subscribe(value => {
@@ -27,10 +32,6 @@ export class NewTaskFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.sub?.unsubscribe();
-  }
-
-  ngAfterViewInit() {
-    this.cardTitleInput.nativeElement.focus();
   }
 
   onSubmit(): void {
@@ -43,12 +44,19 @@ export class NewTaskFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDiscard(): void {
-    this.close.emit();
+    this.formControl.reset();
+    this.editMode = false;
+  }
+
+  enableEditing() {
+    this.editMode = true;
+    this.cd.detectChanges();
+    this.cardTitleInput.nativeElement.focus();
   }
 
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    if (event.target === this.cardTitleInput.nativeElement) {
+    if (event.target === this.cardTitleInput?.nativeElement) {
       this.onSubmit();
     }
   }

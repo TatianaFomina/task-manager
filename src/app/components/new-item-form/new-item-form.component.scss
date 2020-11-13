@@ -1,5 +1,6 @@
 :host {
   display: block;
+  width: 100%;
 
   .task-title-input {
     padding: 0.5rem;
@@ -7,5 +8,9 @@
     resize: none;
     outline: none;
     margin-bottom: 0.5rem;
+  }
+
+  .add-btn {
+    width: 100%;
   }
 }
