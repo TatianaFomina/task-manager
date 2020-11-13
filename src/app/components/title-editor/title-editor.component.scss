@@ -5,6 +5,18 @@
 
   .title-input {
     box-shadow: none;
+    
+    line-height: 1.2;
+    
+    padding: 0 1;
+    height: 2rem;
+  }
+
+  .title-input.valid {
+    font-weight: 500;
+    font-size: 1.25rem;
+    padding: 0;
+    
   }
 
   h5 {

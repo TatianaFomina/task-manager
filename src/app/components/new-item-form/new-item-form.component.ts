@@ -73,7 +73,6 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event) {
-    debugger
     if (!this.eRef.nativeElement.contains(event.target)) {
       this.disableEditing();
     }

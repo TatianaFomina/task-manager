@@ -26,6 +26,8 @@ export class TitleEditorComponent implements ControlValueAccessor, OnInit {
     return this.control.value;
   }
 
+  private prevValue: string;
+
   @ViewChild('input') inputElement: ElementRef;
 
   constructor(private cd: ChangeDetectorRef) { }
@@ -36,6 +38,14 @@ export class TitleEditorComponent implements ControlValueAccessor, OnInit {
   @HostListener('click') onClick() {
     if (this.control.touched && this.control.invalid) { return; }
     this.enableEditing();
+  }
+
+  focusout() {
+    if (this.control.invalid) {
+      this.onChange(this.prevValue);
+      this.control.setValue(this.prevValue);
+    }
+    this.save();
   }
 
   save() {
@@ -51,8 +61,8 @@ export class TitleEditorComponent implements ControlValueAccessor, OnInit {
   }
 
   writeValue(value: any): void {
+    this.prevValue = value;
     this.control.setValue(value);
-
   }
 
   private onTouched = () => { };

@@ -9,8 +9,9 @@
     type="text"
     placeholder="List Title"
     class="title-input form-control"
+    [class.valid]="control.valid"
     [formControl]="control"
-    (focusout)="save()"
+    (focusout)="focusout()"
     (keyup.enter)="save()"
     [class.is-invalid]="control.invalid"
   >
