@@ -1,12 +1,11 @@
 
 
-<button *ngIf="!editMode" class="btn btn-light add-btn" (click)="enableEditing()">
+<button *ngIf="!editMode" class="btn btn-light add-btn" (click)="addButtonClicked($event)">
   <i class="fa fa-plus add-icon"></i>
   <span>
     Add new {{ itemType }}
   </span>
 </button>
-
 
 <form *ngIf="editMode">
   <textarea
@@ -19,10 +18,10 @@
     required>
   </textarea>
 
-  <button type="button" class="btn btn-primary" (click)="onSubmit()">
+  <button type="button" class="btn btn-primary" (click)="save()">
     Add {{ itemType }}
   </button>
-  <button class="btn" (click)="onDiscard()">
+  <button class="btn" (click)="discardButtonClicked($event)">
     <i class="fa fa-times"></i>
   </button>
 </form>
