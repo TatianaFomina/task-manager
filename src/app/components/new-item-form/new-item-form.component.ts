@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -35,9 +35,6 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
   }
 
   save(): void {
-    if (this.formControl.invalid) {
-      return;
-    }
     this.submit.emit(this.formControl.value.trim());
     this.formControl.reset();
     this.cardTitleInput.nativeElement.focus();
@@ -48,13 +45,13 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
     this.editMode = false;
   }
 
-  addButtonClicked(e) {
-    e.stopPropagation();
-    this.enableEditing();
+  addButtonClicked() {
+    setTimeout(() => {
+      this.enableEditing();
+    });
   }
 
-  discardButtonClicked(e) {
-    e.stopPropagation();
+  discardButtonClicked() {
     this.disableEditing();
   }
 
@@ -67,6 +64,7 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
   @HostListener('document:keydown.enter', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
     if (event.target === this.cardTitleInput?.nativeElement) {
+      if (this.formControl.invalid) { return; }
       this.save();
     }
   }
@@ -74,7 +72,11 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event) {
     if (!this.eRef.nativeElement.contains(event.target)) {
-      this.disableEditing();
+      if (this.formControl.invalid) {
+        this.disableEditing();
+      } else {
+        this.save();
+      }
     }
   }
 

@@ -45,7 +45,7 @@ export class ColumnComponent implements OnInit {
       columnName: this.data.name,
       cardData: card
     };
-    const modalRef = this.modalService.open(CardEditorComponent);
+    const modalRef = this.modalService.open(CardEditorComponent, { size: 'md', backdrop: 'static' });
     modalRef.componentInstance.options = options;
     modalRef.result.then(
       result => {
