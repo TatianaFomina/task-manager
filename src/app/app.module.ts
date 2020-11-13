@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NgbDropdownModule, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListComponent } from './components/list/list.component';
-import { TaskComponent } from './components/task/task.component';
+import { ColumnComponent } from './components/column/column.component';
+import { CardComponent } from './components/card/card.component';
 import { NewTaskFormComponent } from './components/new-task-form/new-task-form.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,8 +15,8 @@ import { CardEditorComponent } from './components/card-editor/card-editor.compon
 @NgModule({
   declarations: [
     AppComponent,
-    ListComponent,
-    TaskComponent,
+    ColumnComponent,
+    CardComponent,
     NewTaskFormComponent,
     TitleEditorComponent,
     CardEditorComponent

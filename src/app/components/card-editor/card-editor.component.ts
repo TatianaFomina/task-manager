@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Task } from 'src/app/models/task.model';
+import { Card } from 'src/app/models/card.model';
 
 export interface EditorOptions {
   columnName: string;
-  cardData: Task;
+  cardData: Card;
 }
 
 export enum ModalActions {

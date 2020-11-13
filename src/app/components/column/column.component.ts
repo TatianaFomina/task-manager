@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { List } from 'src/app/models/list.model';
-import { Task } from 'src/app/models/task.model';
+import { Column } from 'src/app/models/column.model';
+import { Card } from 'src/app/models/card.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -8,17 +8,17 @@ import { CardEditorComponent, EditorOptions, ModalActions } from '../card-editor
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-column',
+  templateUrl: './column.component.html',
+  styleUrls: ['./column.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ColumnComponent implements OnInit {
 
-  @Input() data: List;
-  @Output() cardDrop = new EventEmitter<CdkDragDrop<Task[]>>();
+  @Input() data: Column;
+  @Output() cardDrop = new EventEmitter<CdkDragDrop<Card[]>>();
   @Output() delete = new EventEmitter<string>();
 
-  public newTaskFormDisplayed: boolean = false;
+  public newCardFormDisplayed: boolean = false;
   public editTitle: boolean = false;
   public columnTitleControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
 
@@ -29,10 +29,10 @@ export class ListComponent implements OnInit {
   }
 
   addNewCard(cardTitle: string): void {
-    this.data.tasks.push({title: cardTitle, id: uuidv4()});
+    this.data.cards.push({title: cardTitle, id: uuidv4()});
   }
 
-  drop(event: CdkDragDrop<Task[]>): void {
+  drop(event: CdkDragDrop<Card[]>): void {
     this.cardDrop.emit(event);
   }
 
@@ -40,10 +40,10 @@ export class ListComponent implements OnInit {
     this.delete.emit(this.data.id);
   }
 
-  openCardEditor(task: Task) {
+  openCardEditor(card: Card) {
     const options: EditorOptions = {
       columnName: this.data.name,
-      cardData: task
+      cardData: card
     };
     const modalRef = this.modalService.open(CardEditorComponent);
     modalRef.componentInstance.options = options;
@@ -51,13 +51,13 @@ export class ListComponent implements OnInit {
       result => {
         switch (result.action) {
           case ModalActions.UPDATE:
-            const cardToUpdate = this.data.tasks.find(card => card.id === result.data.id);
+            const cardToUpdate = this.data.cards.find(card => card.id === result.data.id);
             cardToUpdate.title = result.data.title;
             cardToUpdate.description = result.data.description;
             break;
         case ModalActions.DELETE:
-          const cardIndexToDelete = this.data.tasks.findIndex(card => card.id === result.data.id);
-          this.data.tasks.splice(cardIndexToDelete, 1);
+          const cardIndexToDelete = this.data.cards.findIndex(card => card.id === result.data.id);
+          this.data.cards.splice(cardIndexToDelete, 1);
           break;
         }
         
