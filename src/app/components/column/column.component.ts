@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Column } from 'src/app/models/column.model';
-import { Card } from 'src/app/models/card.model';
+import { Column, Card } from 'src/app/state/columns/column.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CardEditorComponent, EditorOptions, ModalActions } from '../card-editor/card-editor.component';
-import { v4 as uuidv4 } from 'uuid';
+import { ColumnsService } from 'src/app/state/columns/column.service';
 
 @Component({
   selector: 'app-column',
@@ -16,20 +15,17 @@ export class ColumnComponent implements OnInit {
 
   @Input() data: Column;
   @Output() cardDrop = new EventEmitter<CdkDragDrop<Card[]>>();
-  @Output() delete = new EventEmitter<string>();
 
-  public newCardFormDisplayed: boolean = false;
-  public editTitle: boolean = false;
   public columnTitleControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private columnsService: ColumnsService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.columnTitleControl.setValue(this.data.name);
+    this.columnTitleControl.setValue(this.data.title);
   }
 
   addNewCard(cardTitle: string): void {
-    this.data.cards.push({title: cardTitle, id: uuidv4()});
+    this.columnsService.addCard(this.data.id, cardTitle);
   }
 
   drop(event: CdkDragDrop<Card[]>): void {
@@ -37,12 +33,13 @@ export class ColumnComponent implements OnInit {
   }
 
   deleteClick() {
-    this.delete.emit(this.data.id);
+    debugger
+    this.columnsService.delete(this.data.id);
   }
 
   openCardEditor(card: Card) {
     const options: EditorOptions = {
-      columnName: this.data.name,
+      columnTitle: this.data.title,
       cardData: card
     };
     const modalRef = this.modalService.open(CardEditorComponent, { size: 'md', backdrop: 'static' });
@@ -51,16 +48,12 @@ export class ColumnComponent implements OnInit {
       result => {
         switch (result.action) {
           case ModalActions.UPDATE:
-            const cardToUpdate = this.data.cards.find(card => card.id === result.data.id);
-            cardToUpdate.title = result.data.title;
-            cardToUpdate.description = result.data.description;
+            this.columnsService.updateCard(this.data.id, result.data);
             break;
         case ModalActions.DELETE:
-          const cardIndexToDelete = this.data.cards.findIndex(card => card.id === result.data.id);
-          this.data.cards.splice(cardIndexToDelete, 1);
+          this.columnsService.deleteCard(this.data.id, result.data.id);
           break;
         }
-        
       },
       () => {}
     );

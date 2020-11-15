@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { Column } from './models/column.model';
-import { Card } from './models/card.model';
+import { Column, Card } from './state/columns/column.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { v4 as uuidv4 } from 'uuid';
+import { ColumnsService } from './state/columns/column.service';
+import { ColumnsQuery } from './state/columns/columns.query';
+import { Observable } from 'rxjs';
+import { guid } from '@datorama/akita';
 
 
 @Component({
@@ -11,49 +13,43 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'tasks';
-  columns: Column[] = [{
-    id: uuidv4(),
-    name: "To Do",
-    cards: [
-      {
-        id: uuidv4(),
-        title: "Buy Bread"
-      },
-      {
-        id: uuidv4(),
-        title: "Buy Eggs"
-      }
-    ]
-  },
-  {
-    id: uuidv4(),
-    name: "Done",
-    cards: [
-      {
-        id: uuidv4(),
-        title: "Buy Onion"
-      }
-    ]
-  }];
 
-  drop(event: CdkDragDrop<Card[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
-    }
+  columns$: Observable<Column[]>;
+
+  constructor(private columnsService: ColumnsService, private columnsQuery: ColumnsQuery) {
+    this.columns$ = this.columnsQuery.selectAll();
+
+    // const cards: Card[] = [
+    //   {
+    //     id: guid(),
+    //     title: "Buy Bread"
+    //   },
+    //   {
+    //     id: guid(),
+    //     title: "Buy Eggs"
+    //   }
+    // ];
+    // const column: Column = {
+    //   id: guid(),
+    //   title: 'test',
+    //   cards
+    // };
+    this.columnsService.add('test');
   }
 
-  deleteColumn(columnId: string) {
-    const columnIndexToDelete = this.columns.findIndex(column => column.id === columnId);
-    this.columns.splice(columnIndexToDelete, 1);
+  drop(event: CdkDragDrop<Card[]>) {
+    let card;
+    if (event.previousContainer === event.container) {
+      card = event.container.data[event.previousIndex];
+      this.columnsService.moveCardInColumn(event.container.id, card, event.currentIndex);
+    } else {
+      card = event.previousContainer.data[0];
+      this.columnsService.moveCard(event.previousContainer.id, event.container.id, card);
+    }
+
   }
 
   addColumn(title: string) {
-    this.columns.push({id: uuidv4(), name: title, cards: []});
+    this.columnsService.add(title);
   }
 }

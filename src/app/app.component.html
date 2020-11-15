@@ -1,6 +1,6 @@
 <div cdkDropListGroup>
-  <ng-container *ngFor="let column of columns">
-    <app-column [data]="column" (cardDrop)="drop($event)" (delete)="deleteColumn($event)" class="single-column">
+  <ng-container *ngFor="let column of ( columns$ | async)">
+    <app-column [data]="column" (cardDrop)="drop($event)" class="single-column">
     </app-column>
   </ng-container>
   <div class="card new-column-form single-column">

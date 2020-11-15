@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -38,6 +38,7 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
     this.submit.emit(this.formControl.value.trim());
     this.formControl.reset();
     this.cardTitleInput.nativeElement.focus();
+    // this.editMode = true;
   }
 
   disableEditing(): void {
@@ -50,6 +51,12 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
       this.enableEditing();
     });
   }
+
+  // saveButtonClicked() {
+  //   setTimeout(() => {
+  //     this.save();
+  //   });
+  // }
 
   discardButtonClicked() {
     this.disableEditing();

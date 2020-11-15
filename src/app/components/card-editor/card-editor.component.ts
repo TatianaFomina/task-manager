@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Card } from 'src/app/models/card.model';
+import { Card } from 'src/app/state/columns/column.model';
 
 export interface EditorOptions {
-  columnName: string;
+  columnTitle: string;
   cardData: Card;
 }
 
