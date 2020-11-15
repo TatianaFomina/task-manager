@@ -22,6 +22,7 @@
 
     <app-new-item-form
       [editMode]="newCardEditable"
+      [columnId]="data.id"
       itemType="card"
       (submit)="addNewCard($event)">
     </app-new-item-form>

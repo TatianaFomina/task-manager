@@ -68,11 +68,17 @@ export class NewItemFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  enableEditing(): void {
+    this.editMode = true;
+    this.cd.detectChanges();
+    this.cardTitleInput.nativeElement.focus();
+    if (this.itemType === 'card') {
+      this.columnsService.setNewCardEditable(this.columnId, true);
+    }
+  }
+
   addButtonClicked(): void {
     setTimeout(() => {
-      if (this.itemType === 'card') {
-        this.columnsService.setNewCardEditable(this.columnId, true);
-      }
       this.enableEditing();
     });
   }
@@ -85,12 +91,6 @@ export class NewItemFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   discardButtonClicked(): void {
     this.disableEditing();
-  }
-
-  enableEditing(): void {
-    this.editMode = true;
-    this.cd.detectChanges();
-    this.cardTitleInput.nativeElement.focus();
   }
 
   @HostListener('document:keydown.enter', ['$event'])

@@ -6,7 +6,9 @@ import { environment } from './environments/environment';
 
 import { persistState } from '@datorama/akita';
 
-const storage = persistState();
+const storage = persistState({
+  include: ['columns']
+});
 
 const providers = [{ provide: 'persistStorage', useValue: storage }];
 

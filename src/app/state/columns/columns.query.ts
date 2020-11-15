@@ -15,7 +15,7 @@ export class ColumnsQuery extends QueryEntity<ColumnsState> {
   }
 
   getEnabledEditing(columnId: string): boolean {
-    return this.ui.getEntity(columnId).newCardEditable;
+    return this.ui.getEntity(columnId)?.newCardEditable;
   }
 
 

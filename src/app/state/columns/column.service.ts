@@ -90,6 +90,7 @@ export class ColumnsService {
     this.store.ui.update(columnId, { newCardEditable: newValue });
   }
 
+  @transaction()
   private addDefaults(): void {
     const column1 = createColumn('To Do');
     const column2 = createColumn('Done');
