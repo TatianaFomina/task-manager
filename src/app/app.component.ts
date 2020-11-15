@@ -25,8 +25,8 @@ export class AppComponent {
       card = event.container.data[event.previousIndex];
       this.columnsService.moveCardInColumn(event.container.id, card, event.currentIndex);
     } else {
-      card = event.previousContainer.data[0];
-      this.columnsService.moveCard(event.previousContainer.id, event.container.id, card);
+      card = event.previousContainer.data[event.previousIndex];
+      this.columnsService.moveCard(event.previousContainer.id, event.container.id, card, event.currentIndex);
     }
 
   }

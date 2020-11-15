@@ -56,12 +56,14 @@ export class ColumnsService {
   }
 
   @transaction()
-  moveCard(sourceColumnId: string, targetColumnId: string, card: Card): void {
+  moveCard(sourceColumnId: string, targetColumnId: string, card: Card, insertIndex: number): void {
     this.deleteCard(sourceColumnId, card.id);
     this.store.update(targetColumnId, column => {
+      const head = column.cards.slice(0, insertIndex);
+      const tail = column.cards.slice(insertIndex, column.cards.length);
       return {
         ...column,
-        cards: arrayAdd(column.cards, card)
+        cards: [...head, card, ...tail]
       };
     });
   }
