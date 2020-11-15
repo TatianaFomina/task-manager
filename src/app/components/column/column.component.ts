@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Column, Card, ColumnUI } from 'src/app/state/columns/column.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FormControl, Validators } from '@angular/forms';
@@ -6,13 +6,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CardEditorComponent, EditorOptions, ModalActions } from '../card-editor/card-editor.component';
 import { ColumnsService } from 'src/app/state/columns/column.service';
 import { ColumnsQuery } from 'src/app/state/columns/columns.query';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-column',
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.scss']
 })
-export class ColumnComponent implements OnInit {
+export class ColumnComponent implements OnInit, OnDestroy {
 
   @Input() data: Column;
   @Output() cardDrop = new EventEmitter<CdkDragDrop<Card[]>>();
@@ -20,11 +21,20 @@ export class ColumnComponent implements OnInit {
   public newCardEditable: boolean;
   public columnTitleControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
 
+  private titleSub: Subscription;
+
   constructor(private columnsService: ColumnsService, private columnsQuery: ColumnsQuery, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.columnTitleControl.setValue(this.data.title);
+    this.titleSub = this.columnTitleControl.valueChanges.subscribe(value => {
+      this.columnsService.update(this.data.id, value);
+    });
     this.newCardEditable = this.columnsQuery.getEnabledEditing(this.data.id);
+  }
+
+  ngOnDestroy() {
+    this.titleSub.unsubscribe();
   }
 
   addNewCard(cardTitle: string): void {
