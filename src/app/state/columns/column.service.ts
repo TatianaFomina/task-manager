@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { arrayAdd, arrayRemove, arrayUpdate, transaction } from '@datorama/akita';
-import { Card, Column, createCard, createColumn } from './column.model';
+import { Card, createCard, createColumn } from './column.model';
 import { ColumnsStore } from './columns.store';
 
 @Injectable({
@@ -86,6 +86,17 @@ export class ColumnsService {
 
   setNewCardEditable(columnId: string, newValue: boolean) {
     this.store.ui.update(columnId, { newCardEditable: newValue });
+  }
+
+  reset() {
+    const column1 = createColumn('To Do');
+    const column2 = createColumn('Done')
+    this.store.reset();
+    this.store.add(column1);
+    this.addCard(column1.id, 'Buy Bread');
+    this.addCard(column1.id, 'Buy Onion');
+    this.store.add(column2);
+    this.addCard(column2.id, 'Buy Eggs');
   }
   
 }

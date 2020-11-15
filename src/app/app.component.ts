@@ -16,7 +16,7 @@ export class AppComponent {
 
   constructor(private columnsService: ColumnsService, private columnsQuery: ColumnsQuery) {
     this.columns$ = this.columnsQuery.selectAll();
-    this.columnsService.add('test');
+    this.columnsService.reset();
   }
 
   drop(event: CdkDragDrop<Card[]>) {
