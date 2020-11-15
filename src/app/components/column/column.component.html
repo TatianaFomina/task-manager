@@ -21,6 +21,7 @@
     </div>
 
     <app-new-item-form
+      [editMode]="newCardEditable"
       itemType="card"
       (submit)="addNewCard($event)">
     </app-new-item-form>

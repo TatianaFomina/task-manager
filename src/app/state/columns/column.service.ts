@@ -83,5 +83,9 @@ export class ColumnsService {
       }
     })
   }
+
+  setNewCardEditable(columnId: string, newValue: boolean) {
+    this.store.ui.update(columnId, { newCardEditable: newValue });
+  }
   
 }

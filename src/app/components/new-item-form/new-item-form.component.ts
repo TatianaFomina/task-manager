@@ -1,18 +1,20 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ColumnsService } from 'src/app/state/columns/column.service';
 
 @Component({
   selector: 'app-new-item-form',
   templateUrl: './new-item-form.component.html',
   styleUrls: ['./new-item-form.component.scss']
 })
-export class NewItemFormComponent implements OnInit, OnDestroy {
+export class NewItemFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Output() submit = new EventEmitter<string>();
   @ViewChild('input') cardTitleInput: ElementRef;
   @Input() editMode: boolean = false;
   @Input() itemType: string = 'card';
+  @Input() columnId: string;
 
   public formControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
 
@@ -22,7 +24,7 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
     return `Enter ${this.itemType} title...`;
   }
 
-  constructor(private cd: ChangeDetectorRef, private eRef: ElementRef) { }
+  constructor(private cd: ChangeDetectorRef, private eRef: ElementRef, private columnsService: ColumnsService) { }
 
   ngOnInit(): void {
     this.sub = this.formControl.valueChanges.subscribe(value => {
@@ -34,29 +36,41 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    this.cardTitleInput?.nativeElement.focus();
+  }
+
   save(): void {
     this.submit.emit(this.formControl.value.trim());
     this.formControl.reset();
     this.cardTitleInput.nativeElement.focus();
-    // this.editMode = true;
+    if (this.itemType === 'card') {
+      this.columnsService.setNewCardEditable(this.columnId, true);
+    }
   }
 
   disableEditing(): void {
     this.formControl.reset();
     this.editMode = false;
+    if (this.itemType === 'card') {
+      this.columnsService.setNewCardEditable(this.columnId, false);
+    }
   }
 
   addButtonClicked() {
     setTimeout(() => {
+      if (this.itemType === 'card') {
+        this.columnsService.setNewCardEditable(this.columnId, true);
+      }
       this.enableEditing();
     });
   }
 
-  // saveButtonClicked() {
-  //   setTimeout(() => {
-  //     this.save();
-  //   });
-  // }
+  saveButtonClicked() {
+    setTimeout(() => {
+      this.save();
+    });
+  }
 
   discardButtonClicked() {
     this.disableEditing();
@@ -83,6 +97,7 @@ export class NewItemFormComponent implements OnInit, OnDestroy {
         this.disableEditing();
       } else {
         this.save();
+        this.disableEditing();
       }
     }
   }

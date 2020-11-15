@@ -6,9 +6,9 @@ export type Column = {
   cards: Card[]
 }
 
-// export type ColumnUI = {
-//   newCardEditable: boolean;
-// }
+export type ColumnUI = {
+  newCardEditable: boolean;
+}
 
 export type Card = {
   id: string;

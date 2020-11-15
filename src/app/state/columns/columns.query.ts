@@ -1,32 +1,23 @@
 import { Injectable } from '@angular/core';
-import { QueryEntity } from '@datorama/akita';
-import { ColumnsState, ColumnsStore } from './columns.store';
+import { EntityUIQuery, QueryEntity } from '@datorama/akita';
+import { ColumnsState, ColumnsStore, ColumnsUIState } from './columns.store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ColumnsQuery extends QueryEntity<ColumnsState> {
+
+  ui: EntityUIQuery<ColumnsUIState>;
   
   constructor(protected store: ColumnsStore) {
     super(store);
+    this.createUIQuery();
   }
 
-  // selectCards
+  getEnabledEditing(columnId: string): boolean {
+    return this.ui.getEntity(columnId).newCardEditable;
+  }
 
-  // selectCards() {
-  //   return combineQueries([
-  //     this.selectAll(),
-  //     this.cardsQuery.selectAll()
-  //   ]).pipe(
-  //     map(([columns, cards]) => {
-  //       return columns.map(column => {
-  //         return {
-  //           ...column,
-  //           cards: cards.filter(card => card.columnId === column.id)
-  //         };
-  //       })
-  //     })
-  //   )
-  // }
+ 
 
 }

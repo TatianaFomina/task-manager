@@ -18,7 +18,7 @@
     required>
   </textarea>
 
-  <button type="button" class="btn btn-primary" [disabled]="formControl.invalid" (click)="save()">
+  <button type="button" class="btn btn-primary" [disabled]="formControl.invalid" (click)="saveButtonClicked()">
     Add {{ itemType }}
   </button>
   <button class="btn" (click)="discardButtonClicked()">

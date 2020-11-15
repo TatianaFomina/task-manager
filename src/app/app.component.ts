@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { Column, Card } from './state/columns/column.model';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ColumnsService } from './state/columns/column.service';
 import { ColumnsQuery } from './state/columns/columns.query';
 import { Observable } from 'rxjs';
-import { guid } from '@datorama/akita';
-
 
 @Component({
   selector: 'app-root',
@@ -18,22 +16,6 @@ export class AppComponent {
 
   constructor(private columnsService: ColumnsService, private columnsQuery: ColumnsQuery) {
     this.columns$ = this.columnsQuery.selectAll();
-
-    // const cards: Card[] = [
-    //   {
-    //     id: guid(),
-    //     title: "Buy Bread"
-    //   },
-    //   {
-    //     id: guid(),
-    //     title: "Buy Eggs"
-    //   }
-    // ];
-    // const column: Column = {
-    //   id: guid(),
-    //   title: 'test',
-    //   cards
-    // };
     this.columnsService.add('test');
   }
 

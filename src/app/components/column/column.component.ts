@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Column, Card } from 'src/app/state/columns/column.model';
+import { Column, Card, ColumnUI } from 'src/app/state/columns/column.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CardEditorComponent, EditorOptions, ModalActions } from '../card-editor/card-editor.component';
 import { ColumnsService } from 'src/app/state/columns/column.service';
+import { ColumnsQuery } from 'src/app/state/columns/columns.query';
 
 @Component({
   selector: 'app-column',
@@ -16,12 +17,14 @@ export class ColumnComponent implements OnInit {
   @Input() data: Column;
   @Output() cardDrop = new EventEmitter<CdkDragDrop<Card[]>>();
 
+  public newCardEditable: boolean;
   public columnTitleControl = new FormControl(null, [Validators.required, Validators.minLength(1)]);
 
-  constructor(private columnsService: ColumnsService, private modalService: NgbModal) { }
+  constructor(private columnsService: ColumnsService, private columnsQuery: ColumnsQuery, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.columnTitleControl.setValue(this.data.title);
+    this.newCardEditable = this.columnsQuery.getEnabledEditing(this.data.id);
   }
 
   addNewCard(cardTitle: string): void {
@@ -33,7 +36,6 @@ export class ColumnComponent implements OnInit {
   }
 
   deleteClick() {
-    debugger
     this.columnsService.delete(this.data.id);
   }
 
