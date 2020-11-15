@@ -32,21 +32,21 @@ export class CardEditorComponent implements OnInit {
     this.form.patchValue(this.options.cardData);
   }
 
-  dismiss() {
+  dismiss(): void {
     this.modal.dismiss();
   }
 
-  submit() {
+  submit(): void {
     this.modal.close({
       action: ModalActions.UPDATE,
-      data:{
+      data: {
         ...this.options.cardData,
         ...this.form.value
       }
     });
   }
 
-  delete() {
+  delete(): void {
     this.modal.close({ action: ModalActions.DELETE, data: { id: this.options.cardData.id }});
   }
 

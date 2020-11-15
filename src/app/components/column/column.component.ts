@@ -35,11 +35,11 @@ export class ColumnComponent implements OnInit {
     this.cardDrop.emit(event);
   }
 
-  deleteClick() {
+  deleteClick(): void {
     this.columnsService.delete(this.data.id);
   }
 
-  openCardEditor(card: Card) {
+  openCardEditor(card: Card): void {
     const options: EditorOptions = {
       columnTitle: this.data.title,
       cardData: card

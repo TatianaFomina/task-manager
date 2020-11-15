@@ -4,6 +4,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ColumnsService } from './state/columns/column.service';
 import { ColumnsQuery } from './state/columns/columns.query';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -16,10 +17,9 @@ export class AppComponent {
 
   constructor(private columnsService: ColumnsService, private columnsQuery: ColumnsQuery) {
     this.columns$ = this.columnsQuery.selectAll();
-    this.columnsService.reset();
   }
 
-  drop(event: CdkDragDrop<Card[]>) {
+  drop(event: CdkDragDrop<Card[]>): void {
     let card;
     if (event.previousContainer === event.container) {
       card = event.container.data[event.previousIndex];
@@ -31,7 +31,7 @@ export class AppComponent {
 
   }
 
-  addColumn(title: string) {
+  addColumn(title: string): void {
     this.columnsService.add(title);
   }
 }

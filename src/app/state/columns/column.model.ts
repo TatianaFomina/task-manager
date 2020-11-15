@@ -1,20 +1,20 @@
-import { guid } from '@datorama/akita'
+import { guid } from '@datorama/akita';
 
 export type Column = {
   id: string;
   title: string;
   cards: Card[]
-}
+};
 
 export type ColumnUI = {
   newCardEditable: boolean;
-}
+};
 
 export type Card = {
   id: string;
   title: string;
   description?: string;
-}
+};
 
 
 export function createColumn(title: string): Column {
@@ -29,6 +29,6 @@ export function createCard(title: string): Card {
   return {
     id: guid(),
     title
-  }
+  };
 }
 

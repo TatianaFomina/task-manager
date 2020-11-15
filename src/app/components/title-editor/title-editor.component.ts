@@ -15,14 +15,14 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from
 })
 export class TitleEditorComponent implements ControlValueAccessor, OnInit {
 
-  @Input() editMode: boolean = false;
+  @Input() editMode = false;
 
   public control = new FormControl(null, [
     Validators.required,
     Validators.minLength(1)
   ]);
 
-  get value() {
+  get value(): string {
     return this.control.value;
   }
 
@@ -35,12 +35,12 @@ export class TitleEditorComponent implements ControlValueAccessor, OnInit {
   ngOnInit(): void {
   }
 
-  @HostListener('click') onClick() {
+  @HostListener('click') onClick(): void {
     if (this.control.touched && this.control.invalid) { return; }
     this.enableEditing();
   }
 
-  focusout() {
+  focusout(): void {
     if (this.control.invalid) {
       this.onChange(this.prevValue);
       this.control.setValue(this.prevValue);
@@ -48,13 +48,13 @@ export class TitleEditorComponent implements ControlValueAccessor, OnInit {
     this.save();
   }
 
-  save() {
+  save(): void {
     if (this.control.invalid) { return; }
-    this.onChange(this.control.value)
+    this.onChange(this.control.value);
     this.editMode = false;
   }
 
-  enableEditing() {
+  enableEditing(): void {
     this.editMode = true;
     this.cd.detectChanges();
     this.inputElement.nativeElement.focus();
@@ -69,11 +69,11 @@ export class TitleEditorComponent implements ControlValueAccessor, OnInit {
 
   private onChange: (value: string) => void = () => { };
 
-  registerOnChange(onChange: (value: string) => void) {
+  registerOnChange(onChange: (value: string) => void): void {
     this.onChange = onChange;
   }
 
-  registerOnTouched(onTouched: () => void) {
+  registerOnTouched(onTouched: () => void): void {
     this.onTouched = onTouched;
   }
 

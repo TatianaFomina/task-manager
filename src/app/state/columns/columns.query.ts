@@ -8,7 +8,7 @@ import { ColumnsState, ColumnsStore, ColumnsUIState } from './columns.store';
 export class ColumnsQuery extends QueryEntity<ColumnsState> {
 
   ui: EntityUIQuery<ColumnsUIState>;
-  
+
   constructor(protected store: ColumnsStore) {
     super(store);
     this.createUIQuery();
@@ -18,6 +18,6 @@ export class ColumnsQuery extends QueryEntity<ColumnsState> {
     return this.ui.getEntity(columnId).newCardEditable;
   }
 
- 
+
 
 }
